@@ -1,0 +1,39 @@
+.array-bar{
+    width: 5px;   
+	background-color: #008CBA;
+    display: inline-block;
+    margin: 0 1px;
+}
+.array-container{
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-top: 2%;
+}
+
+
+.button-container{
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-top: 2px;
+
+}
+
+
+ #button{
+    
+    border-radius: 8px;
+    padding: 14px 40px;
+    background-color: white; 
+    border: 2px solid #008CBA;
+    color: black;
+    font-size: 20px;
+    transition-duration: 0.4s;
+    
+    margin: 1% 1%;
+}
+#button:hover {
+    background-color: #008CBA; /* Green */
+    color: white;
+}
