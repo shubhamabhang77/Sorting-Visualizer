@@ -2,8 +2,14 @@ import React from "react";
 import "./Sorting.css";
 import mergeSort from "../Algorithms/mergeSort";
 import bubbleSort from "../Algorithms/bubbleSort";
-import insertionSort from "../Algorithms/insertionSort";
+import insertionSort from "../Algorithms/insertionSort.jsx";
 import quickSort from "../Algorithms/quickSort";
+
+const COMPARISON_COLOR = "green"
+const SWAP_COLOR = "red"
+const ORIGINAL_COLOR = "#008CBA"
+const AUTOMATION_SPEED = 2
+const ARRAY_SIZE = 100
 
 class Sorting extends React.Component{
     
@@ -17,7 +23,6 @@ class Sorting extends React.Component{
         this.quickSort = this.quickSort.bind(this)
         this.insertionSort = this.insertionSort.bind(this)
         this.bubbleSort = this.bubbleSort.bind(this)
-        this.changeArray = this.changeArray.bind(this)
     }
     
 
@@ -27,7 +32,7 @@ class Sorting extends React.Component{
 
     resetArray(){
         const array = [];
-        let i = 200;
+        let i = ARRAY_SIZE;
         while(i--){
             array.push(randomIntFromInterval(5, 500))
         }
@@ -45,56 +50,58 @@ class Sorting extends React.Component{
     }
     insertionSort(){
         let arrayBars = document.getElementsByClassName("array-bar")
-
         const testSortedArray = this.state.array.slice().sort((a,b) => a-b);
-        const sortedArray = insertionSort(this.state.array, arrayBars);
-        
-        
+        const [sortedArray, animations] = insertionSort(this.state.array, arrayBars);
+
         console.log(sortedArray)
 
         testingAlgorithm(testSortedArray, sortedArray) ? console.log("array is sorted properly") : console.log("array is not sorted properly");
         
-        // for(let i = 0; i < 200; i++){
-        //     setTimeout(() =>{ 
-        //         console.log("shubham")
-        //         const len = animations[i].length;
-        //         for(let j = 0; j < len; j++){
-        //             const index1 = animations[i][j][1];
-        //             const index2 = animations[i][j][2];
+        const length = animations.length
+        for(let i = 0; i < length; i++){
+            const colorChange = (i % 2 === 0)
+            const barOne = animations[i][1];
+            const barTwo = animations[i][2];
+            const barOneStyle = arrayBars[barOne].style
+            const barTwoStyle = arrayBars[barTwo].style
+            
+            if(colorChange){
+                if(animations[i][0] === 'c'){
+                    setTimeout(() => {
+                        barOneStyle.backgroundColor = COMPARISON_COLOR
+                        barTwoStyle.backgroundColor = COMPARISON_COLOR
+                    }, i * AUTOMATION_SPEED)
+                }
+                else if(animations[i][0] === 's'){
+                    setTimeout(() => {
+                        barOneStyle.backgroundColor = SWAP_COLOR
+                        barTwoStyle.backgroundColor = SWAP_COLOR
+                        barOneStyle.height = animations[i][3] + 'px'
+                        barTwoStyle.height = animations[i][4] + 'px'
+                    }, i * AUTOMATION_SPEED)
 
-        //             if(animations[i][j][0] === 'c'){
-        //                 arrayBars[index1].style.backgroundColor = "red"
-        //                 arrayBars[animations[i][j][2]].style.backgroundColor = "red"
-        //                 arrayBars[index1].style.backgroundColor = "#008CBA"
-        //                 arrayBars[index2].style.backgroundColor = "#008CBA"
-        //             }
-        //             else if(animations[i][j][0] === 's'){
-        //                 arrayBars[index1].style.backgroundColor = "black"
-        //                 arrayBars[index2].style.backgroundColor = "black"
-        //                 arrayBars[index1].style.height = this.state.array[index1]
-        //                 arrayBars[index2].style.height = this.state.array[index2]
-        //                 arrayBars[index1].style.backgroundColor = "#008CBA"
-        //                 arrayBars[index2].style.backgroundColor = "#008CBA"
-                            
-
-        //             }
-        //         }
-        //     }, 5000)
-        // }
-
-        console.log("done")
-    }
-
-    changeArray(){
-        const temp = [];
-        for(let i = 0; i < 200; i++){
-            temp.push(i)
-            this.setState({array: temp})
+                }
+            }
+            else {
+                if(animations[i][0] === 'c'){
+                    setTimeout(() => {
+                        barOneStyle.backgroundColor = ORIGINAL_COLOR
+                        barTwoStyle.backgroundColor = ORIGINAL_COLOR
+                    }, i * AUTOMATION_SPEED)
+                }
+                else if(animations[i][0] === 's'){
+                    setTimeout(() => {
+                        barOneStyle.backgroundColor = ORIGINAL_COLOR
+                        barTwoStyle.backgroundColor = ORIGINAL_COLOR
+                    }, i * AUTOMATION_SPEED)
+                }
+            }
         }
     }
+
+
     render(){
 
-        let arrayBars = document.getElementsByClassName("array-bars")
         return(
             <div>
                 <div className="button-container">
@@ -105,6 +112,7 @@ class Sorting extends React.Component{
                  <button id="button" onClick={this.insertionSort}>Insertion Sort</button>
                 </div>
                 
+
 
                 <div className="array-container" id="whole">
                     {this.state.array.map((value, id) => (
