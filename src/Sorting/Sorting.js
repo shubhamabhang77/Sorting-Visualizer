@@ -4,11 +4,13 @@ import mergeSort from "../Algorithms/mergeSort";
 import bubbleSort from "../Algorithms/bubbleSort";
 import insertionSort from "../Algorithms/insertionSort";
 import quickSort from "../Algorithms/quickSort";
+import selectionSort from "../Algorithms/selectionSort"
+
 
 const COMPARISON_COLOR = "green"
 const SWAP_COLOR = "red"
 const ORIGINAL_COLOR = "#008CBA"
-const AUTOMATION_SPEED = 200
+const AUTOMATION_SPEED = 300
 const ARRAY_SIZE = 20
 
 class Sorting extends React.Component{
@@ -23,6 +25,7 @@ class Sorting extends React.Component{
         this.quickSort = this.quickSort.bind(this)
         this.insertionSort = this.insertionSort.bind(this)
         this.bubbleSort = this.bubbleSort.bind(this)
+        this.selectionSort = this.selectionSort.bind(this)
     }
     
 
@@ -45,6 +48,58 @@ class Sorting extends React.Component{
     quickSort(){
         const sortedArray = quickSort(this.state.array)
     }
+    selectionSort(){
+        let arrayBars = document.getElementsByClassName("array-bar")
+        const testSortedArray = this.state.array.slice().sort((a,b) => a-b);
+        const [sortedArray, animations] = selectionSort(this.state.array, arrayBars);
+
+        console.log(sortedArray)
+
+        testingAlgorithm(testSortedArray, sortedArray) ? console.log("array is sorted properly") : console.log("array is not sorted properly");
+        
+        const length = animations.length
+        for(let i = 0; i < length; i++){
+            const colorChange = (i % 2 === 0)
+            const barOne = animations[i][1];
+            const barTwo = animations[i][2];
+            const barOneStyle = arrayBars[barOne].style;
+            const barTwoStyle = arrayBars[barTwo].style;
+            
+            if(colorChange){
+                if(animations[i][0] === 'c'){
+                    setTimeout(() => {
+                        barOneStyle.backgroundColor = COMPARISON_COLOR
+                        barTwoStyle.backgroundColor = COMPARISON_COLOR
+                    }, i * AUTOMATION_SPEED)
+                }
+                else if(animations[i][0] === 's'){
+                    setTimeout(() => {
+                        barOneStyle.backgroundColor = SWAP_COLOR
+                        barTwoStyle.backgroundColor = SWAP_COLOR
+                        barOneStyle.height = animations[i][3] + 'px'
+                        barTwoStyle.height = animations[i][4] + 'px'
+                    }, i * AUTOMATION_SPEED)
+
+                }
+            }
+            else {
+                if(animations[i][0] === 'c'){
+                    setTimeout(() => {
+                        barOneStyle.backgroundColor = ORIGINAL_COLOR
+                        barTwoStyle.backgroundColor = ORIGINAL_COLOR
+                    }, i * AUTOMATION_SPEED)
+                }
+                else if(animations[i][0] === 's'){
+                    setTimeout(() => {
+                        barOneStyle.backgroundColor = ORIGINAL_COLOR
+                        barTwoStyle.backgroundColor = ORIGINAL_COLOR
+                    }, i * AUTOMATION_SPEED)
+                }
+            }
+        }
+
+    }
+
     bubbleSort(){
         let arrayBars = document.getElementsByClassName("array-bar")
         const testSortedArray = this.state.array.slice().sort((a,b) => a-b);
@@ -159,6 +214,7 @@ class Sorting extends React.Component{
                  <button id="button" onClick={this.quickSort}>Quick Sort</button>
                  <button id="button" onClick={this.bubbleSort}>Bubble Sort</button>   
                  <button id="button" onClick={this.insertionSort}>Insertion Sort</button>
+                 <button id="button" onClick={this.selectionSort}>Selection Sort</button>
                 </div>
                 
 
