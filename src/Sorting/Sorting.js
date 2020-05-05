@@ -1,6 +1,6 @@
 import React from "react";
 import "./Sorting.css";
-import mergeSort from "../Algorithms/mergeSort";
+import getmergesortanimations from "../Algorithms/mergeSort";
 import bubbleSort from "../Algorithms/bubbleSort";
 import insertionSort from "../Algorithms/insertionSort";
 import quickSort from "../Algorithms/quickSort";
@@ -10,8 +10,8 @@ import selectionSort from "../Algorithms/selectionSort"
 const COMPARISON_COLOR = "green"
 const SWAP_COLOR = "red"
 const ORIGINAL_COLOR = "#008CBA"
-const AUTOMATION_SPEED = 300
-const ARRAY_SIZE = 20
+const AUTOMATION_SPEED = 3
+const ARRAY_SIZE = 100
 
 class Sorting extends React.Component{
     
@@ -42,8 +42,41 @@ class Sorting extends React.Component{
         this.setState({array})
     }
     mergeSort(){
-        console.log(this.state.array)
-        const sortedArray = mergeSort(this.state.array)
+        let arrayBars = document.getElementsByClassName("array-bar")
+ 
+        const [sortedArray, animations] = getmergesortanimations(this.state.array)
+        const testSortedArray = this.state.array.slice().sort((a, b) => a-b)
+        testingAlgorithm(testSortedArray, sortedArray) ? console.log("array is sorted properly") : console.log("array is not sorted properly");
+
+        const length = animations.length
+        for(let i = 0; i < length; i++){
+            const colorChange = (i % 3 !== 2)
+            if(colorChange){
+                const barOne = animations[i][1];
+                const barTwo = animations[i][2];
+                const barOneStyle = arrayBars[barOne].style;
+                const barTwoStyle = arrayBars[barTwo].style;
+                const color = (i % 3 === 0) ? SWAP_COLOR : ORIGINAL_COLOR
+                setTimeout(() => {
+                    barOneStyle.backgroundColor = color
+                    barTwoStyle.backgroundColor = color
+                }, i*AUTOMATION_SPEED)
+            }
+            else{
+                const barOne = animations[i][1];
+                const barOneStyle = arrayBars[barOne].style;
+
+                setTimeout(() => {
+                    barOneStyle.height = animations[i][2] + 'px'
+                }, i*AUTOMATION_SPEED)
+            }
+            if(i === (length-1)){
+                setTimeout(() => {
+                    this.setState({array: sortedArray})
+                }, (i+1) * AUTOMATION_SPEED)
+            }
+        }
+
     }
     quickSort(){
         const sortedArray = quickSort(this.state.array)
@@ -95,6 +128,11 @@ class Sorting extends React.Component{
                         barTwoStyle.backgroundColor = ORIGINAL_COLOR
                     }, i * AUTOMATION_SPEED)
                 }
+            }
+            if(i === (length-1)){
+                setTimeout(() => {
+                    this.setState({array: sortedArray})
+                }, (i+1) * AUTOMATION_SPEED)
             }
         }
 
@@ -148,6 +186,11 @@ class Sorting extends React.Component{
                     }, i * AUTOMATION_SPEED)
                 }
             }
+            if(i === (length-1)){
+                setTimeout(() => {
+                    this.setState({array: sortedArray})
+                }, (i+1) * AUTOMATION_SPEED)
+            }
         }
         
     }
@@ -199,6 +242,11 @@ class Sorting extends React.Component{
                         barTwoStyle.backgroundColor = ORIGINAL_COLOR
                     }, i * AUTOMATION_SPEED)
                 }
+            }
+            if(i === (length-1)){
+                setTimeout(() => {
+                    this.setState({array: sortedArray})
+                }, (i+1) * AUTOMATION_SPEED)
             }
         }
     }
