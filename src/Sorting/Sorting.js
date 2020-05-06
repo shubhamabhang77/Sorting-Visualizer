@@ -10,8 +10,8 @@ import selectionSort from "../Algorithms/selectionSort"
 const COMPARISON_COLOR = "green"
 const SWAP_COLOR = "red"
 const ORIGINAL_COLOR = "#008CBA"
-const AUTOMATION_SPEED = 300
-const ARRAY_SIZE = 16
+const AUTOMATION_SPEED = 30
+const ARRAY_SIZE = 100
 
 class Sorting extends React.Component{
     
