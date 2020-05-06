@@ -1,18 +1,62 @@
 import React from "react";
 
-function quickSort(array){
-    let sortedArray = [];
-    return sortedArray
+
+export default function getQuickSortAnimations(array){
+    const animations = [];
+    const length = array.length
+    console.log(array)
+    quickSort(array, 0, length-1, animations);
+    console.log(array)
+
+    return [array, animations];
+}
+
+
+
+function quickSort(array, start, end, animations){
+    let pIndex
+    if(start < end){
+        pIndex = partition(array, start, end, animations)
+        quickSort(array, start, pIndex-1, animations)
+        quickSort(array, pIndex+1, end, animations)
+        
+    }
+}
+
+function partition(array, start, end, animations){
+    let i = 0
+    let pivot = array[end]
+    let temp
+    console.log("pivot value ", pivot)
+    let pIndex = start
+    for(i = start; i < end; i++){
+        animations.push(['c', i, pIndex, end])
+        animations.push(['c', i, pIndex, end])
+
+        if(array[i] < pivot){
+
+            animations.push(['s', pIndex, i, array[i], array[pIndex]])
+            animations.push(['s', pIndex, i])
+
+            temp = array[i]
+            array[i] = array[pIndex]
+            array[pIndex] = temp
+            pIndex++;
+            console.log("shubham", array[i], array[pIndex-1])
+        }
+    }
+
+    animations.push(['sp', end, pIndex, array[pIndex], array[end]])
+    animations.push(['sp', end, pIndex])
+
+    temp = array[end]
+    array[end] = array[pIndex]
+    array[pIndex] = temp
+    console.log("shubham", array[i], array[pIndex-1])
+    console.log("after swapping", array)
+    return pIndex
 }
 
 
 
 
-
-
-
-
-
-
-
-export default quickSort;

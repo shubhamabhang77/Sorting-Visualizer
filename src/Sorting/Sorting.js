@@ -3,15 +3,15 @@ import "./Sorting.css";
 import getmergesortanimations from "../Algorithms/mergeSort";
 import bubbleSort from "../Algorithms/bubbleSort";
 import insertionSort from "../Algorithms/insertionSort";
-import quickSort from "../Algorithms/quickSort";
+import getQuickSortAnimations from "../Algorithms/quickSort";
 import selectionSort from "../Algorithms/selectionSort"
 
 
 const COMPARISON_COLOR = "green"
 const SWAP_COLOR = "red"
 const ORIGINAL_COLOR = "#008CBA"
-const AUTOMATION_SPEED = 3
-const ARRAY_SIZE = 100
+const AUTOMATION_SPEED = 300
+const ARRAY_SIZE = 16
 
 class Sorting extends React.Component{
     
@@ -79,7 +79,81 @@ class Sorting extends React.Component{
 
     }
     quickSort(){
-        const sortedArray = quickSort(this.state.array)
+        let arrayBars = document.getElementsByClassName("array-bar")
+        const [sortedArray, animations] = getQuickSortAnimations(this.state.array)
+
+        const testSortedArray = this.state.array.slice().sort((a,b) => a-b);
+
+        testingAlgorithm(testSortedArray, sortedArray) ? console.log("array is sorted properly") : console.log("array is not sorted properly");
+
+
+        const length = animations.length
+        for(let i = 0; i < length; i++){
+            const colorChange = (i % 2 === 0)
+            const barOne = animations[i][1];
+            const barTwo = animations[i][2];
+
+            const barOneStyle = arrayBars[barOne].style;
+            const barTwoStyle = arrayBars[barTwo].style;
+            if(colorChange){
+                if(animations[i][0] === 'c'){
+                    const barThree = animations[i][3];
+                    const barThreeStyle = arrayBars[barThree].style;
+
+                    setTimeout(() => {
+                        barOneStyle.backgroundColor = COMPARISON_COLOR  
+                        barTwoStyle.backgroundColor = 'yellow'
+                        barThreeStyle.backgroundColor = COMPARISON_COLOR
+                    }, i * AUTOMATION_SPEED)
+                }
+                else if(animations[i][0] === 's'){
+                    setTimeout(() => {
+                        barOneStyle.backgroundColor = SWAP_COLOR
+                        barTwoStyle.backgroundColor = SWAP_COLOR
+                        barOneStyle.height = animations[i][3] + 'px'
+                        barTwoStyle.height = animations[i][4] + 'px'
+                    }, i * AUTOMATION_SPEED)
+
+                }
+                else if(animations[i][0] === 'sp'){
+                    setTimeout(() => {
+                        barOneStyle.backgroundColor = SWAP_COLOR
+                        barTwoStyle.backgroundColor = SWAP_COLOR
+                        barOneStyle.height = animations[i][4] + 'px'
+                        barTwoStyle.height = animations[i][5] + 'px'
+                    })
+                }
+            }
+            else {
+                if(animations[i][0] === 'c'){
+                    const barThree = animations[i][3];
+                    const barThreeStyle = arrayBars[barThree].style;
+
+                    setTimeout(() => {
+                        barOneStyle.backgroundColor = ORIGINAL_COLOR
+                        barTwoStyle.backgroundColor = ORIGINAL_COLOR
+                        barThreeStyle.backgroundColor = ORIGINAL_COLOR
+                    }, i * AUTOMATION_SPEED)
+                }
+                else if(animations[i][0] === 's'){
+                    setTimeout(() => {
+                        barOneStyle.backgroundColor = ORIGINAL_COLOR
+                        barTwoStyle.backgroundColor = ORIGINAL_COLOR
+                    }, i * AUTOMATION_SPEED)
+                }
+                else if(animations[i][0] === 'sp'){
+                    setTimeout(() => {
+                        barOneStyle.backgroundColor = ORIGINAL_COLOR
+                        barTwoStyle.backgroundColor = ORIGINAL_COLOR
+                    })
+                }
+            }
+            if(i === (length-1)){
+                setTimeout(() => {
+                    this.setState({array: sortedArray})
+                }, (i+1) * AUTOMATION_SPEED)
+            }
+        }
     }
     selectionSort(){
         let arrayBars = document.getElementsByClassName("array-bar")
