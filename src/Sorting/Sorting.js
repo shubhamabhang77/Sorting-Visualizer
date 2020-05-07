@@ -337,7 +337,7 @@ class Sorting extends React.Component{
             this.resetArray()
         }
         else{
-            alert("Please, Enter Automation Speed a number between 10 and 2000")
+            alert("Please, Enter Automation Speed a number between 1 and 2000")
         }
     }
     
