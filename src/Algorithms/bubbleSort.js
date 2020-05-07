@@ -1,4 +1,3 @@
-import React from "react";
 
 function bubbleSort(array){
     let temp, i, j;

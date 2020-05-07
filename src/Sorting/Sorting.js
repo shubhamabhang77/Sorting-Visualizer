@@ -5,7 +5,6 @@ import bubbleSort from "../Algorithms/bubbleSort";
 import insertionSort from "../Algorithms/insertionSort";
 import getQuickSortAnimations from "../Algorithms/quickSort";
 import selectionSort from "../Algorithms/selectionSort";
-import Panel from "./Panel";
 import Footer from "./Footer.js"
 
 
@@ -344,7 +343,6 @@ class Sorting extends React.Component{
     
 
     render(){
-        let x = document.getElementById("text")
         let tem, tem1;
         if(flag){
             tem = "The Array size is " + ARRAY_SIZE

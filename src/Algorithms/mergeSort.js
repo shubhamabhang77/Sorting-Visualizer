@@ -1,4 +1,3 @@
-import React from "react";
 
 // function mergeSort(array, start, end, mainarray, animations){
 
