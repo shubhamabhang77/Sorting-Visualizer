@@ -7,22 +7,59 @@
 .array-container{
     display: flex;
     justify-content: center;
-    margin-left: auto;
-    margin-top: 2%;
+    width: 70%;
+    margin-right: 5%;
+    margin-left: 5%;
 }
 
+.Panel{
+    width: 19%;
+    height: 40vh;
+    border-style: groove;
 
+}
+input[type="text"]{
+    justify-content: center;
+    width: 80%;
+    padding: 12px 20px;
+    font-size: 20px;
+    margin: 8px 8px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 40px;
+    box-sizing: border-box;
+}
+#submit {
+    width: 80%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    margin: 8px 8px;
+    font-size: 20px;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+  }
+.footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(228, 228, 228);
+    color: #a1a1a1;
+    height: 2vh;
+    text-align: center;
+}
 .button-container{
     display: flex;
+    margin-top: 0px;
+    background-color: rgb(161, 207, 223);
+    height: 10vh;
     justify-content: center;
-    margin-left: auto;
-    margin-top: 2px;
-
 }
 
 
  #button{
-    
     border-radius: 8px;
     padding: 14px 40px;
     background-color: white; 

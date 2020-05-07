@@ -1,12 +1,8 @@
-import React from "react";
-
 
 export default function getQuickSortAnimations(array){
     const animations = [];
     const length = array.length
-    console.log(array)
     quickSort(array, 0, length-1, animations);
-    console.log(array)
 
     return [array, animations];
 }
@@ -27,7 +23,6 @@ function partition(array, start, end, animations){
     let i = 0
     let pivot = array[end]
     let temp
-    console.log("pivot value ", pivot)
     let pIndex = start
     for(i = start; i < end; i++){
         animations.push(['c', i, pIndex, end])
@@ -42,18 +37,15 @@ function partition(array, start, end, animations){
             array[i] = array[pIndex]
             array[pIndex] = temp
             pIndex++;
-            console.log("shubham", array[i], array[pIndex-1])
         }
     }
 
-    animations.push(['sp', end, pIndex, array[pIndex], array[end]])
-    animations.push(['sp', end, pIndex])
+    animations.push(['s', end, pIndex, array[pIndex], array[end]])
+    animations.push(['s', end, pIndex])
 
     temp = array[end]
     array[end] = array[pIndex]
     array[pIndex] = temp
-    console.log("shubham", array[i], array[pIndex-1])
-    console.log("after swapping", array)
     return pIndex
 }
 
